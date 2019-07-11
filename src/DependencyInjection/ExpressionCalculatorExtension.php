@@ -41,6 +41,7 @@ class ExpressionCalculatorExtension extends Extension
         $adapter = new $adapterClassName();
 
         $calcDefinition->replaceArgument(0, $adapter);
+        $calcDefinition->setPublic(true);
 
         $container->setDefinition(ExpressionCalculator::class, $calcDefinition);
     }
