@@ -81,6 +81,10 @@ class DefaultAdapter implements AdapterInterface
                     end($termsWithComputedPrioritized), $terms[$idx + 1]
                 );
 
+                if (INF === $termsWithComputedPrioritized[$lastComputedIdx]) {
+                    throw new ExpressionParsingException('Expression overflows float type value');
+                }
+
                 $skipNextTerm = true;
                 continue;
             }
@@ -102,6 +106,10 @@ class DefaultAdapter implements AdapterInterface
 
             $callback = $this->operatorToCallback[$term];
             $result = $callback($result, $terms[$idx + 1]);
+
+            if (INF === $result) {
+                throw new ExpressionParsingException('Expression overflows float type value');
+            }
         }
 
         return $result;
@@ -139,6 +147,11 @@ class DefaultAdapter implements AdapterInterface
                     throw new ExpressionParsingException("Unexpected term `$term`");
                 }
                 $terms[$idx] = (float) $term;
+
+                if ($term !== (string) $terms[$idx]) {
+                    throw new ExpressionParsingException("`$term` overflows float type value");
+                }
+
                 $prevIsDigit = true;
 
                 continue;
