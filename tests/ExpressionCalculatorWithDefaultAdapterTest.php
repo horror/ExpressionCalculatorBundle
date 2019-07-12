@@ -8,8 +8,7 @@ use horror\ExpressionCalculatorBundle\ExpressionCalculator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ExpressionCalculatorWithDefaultAdapterTest
- * @package horror\ExpressionCalculatorBundle\Tests
+ * Class ExpressionCalculatorWithDefaultAdapterTest.
  */
 class ExpressionCalculatorWithDefaultAdapterTest extends TestCase
 {
@@ -20,8 +19,9 @@ class ExpressionCalculatorWithDefaultAdapterTest extends TestCase
 
     /**
      * ExpressionCalculatorWithDefaultAdapterTest constructor.
-     * @param null $name
-     * @param array $data
+     *
+     * @param null   $name
+     * @param array  $data
      * @param string $dataName
      */
     public function __construct($name = null, array $data = [], $dataName = '')
@@ -124,5 +124,20 @@ class ExpressionCalculatorWithDefaultAdapterTest extends TestCase
     public function testAllOperatorsWithWhiteSpacesExpression(): void
     {
         $this->assertEquals(.6, $this->calculatorWithDefaultAdapter->calc('1    + 2-   3*4/ 5'));
+    }
+
+    public function testOneDigitExpression(): void
+    {
+        $this->assertEquals(1., $this->calculatorWithDefaultAdapter->calc('1'));
+    }
+
+    public function testOneDigitExpression2(): void
+    {
+        $this->assertEquals(-1.2, $this->calculatorWithDefaultAdapter->calc('-1.2'));
+    }
+
+    public function testAllOperatorsFloatDigitExpression(): void
+    {
+        $this->assertEquals(1.1823529411764704, $this->calculatorWithDefaultAdapter->calc('1.5+2.4-3.3*4.2/5.1'));
     }
 }

@@ -4,6 +4,9 @@ namespace horror\ExpressionCalculatorBundle\Adapters;
 
 use horror\ExpressionCalculatorBundle\Exception\ExpressionParsingException;
 
+/**
+ * Class DefaultAdapter.
+ */
 class DefaultAdapter implements AdapterInterface
 {
     private const UNEXPECTED_CHARS_PATTERN = '/[^\d\.\+\-\/\*]+/';
@@ -17,6 +20,9 @@ class DefaultAdapter implements AdapterInterface
      */
     private $operatorToCallback;
 
+    /**
+     * DefaultAdapter constructor.
+     */
     public function __construct()
     {
         $this->operatorToCallback = [
@@ -35,7 +41,7 @@ class DefaultAdapter implements AdapterInterface
                 }
 
                 return $left / $right;
-            }
+            },
         ];
     }
 
@@ -54,8 +60,8 @@ class DefaultAdapter implements AdapterInterface
      *
      * @return float
      */
-    private function evaluate(array $terms): float {
-
+    private function evaluate(array $terms): float
+    {
         $termsWithComputedPrioritized = [];
         $skipNextTerm = false;
 
@@ -123,7 +129,7 @@ class DefaultAdapter implements AdapterInterface
             !is_array($matches['terms'] ?? null) ||
             0 === count($terms = $matches['terms'])
         ) {
-            throw new ExpressionParsingException("Unknown parsing error");
+            throw new ExpressionParsingException('Unknown parsing error');
         }
 
         $prevIsDigit = null;
@@ -162,7 +168,8 @@ class DefaultAdapter implements AdapterInterface
      *
      * @return bool
      */
-    private function validateDigit(string $digit): bool {
+    private function validateDigit(string $digit): bool
+    {
         return is_numeric($digit);
     }
 
@@ -171,7 +178,8 @@ class DefaultAdapter implements AdapterInterface
      *
      * @return bool
      */
-    private function validateOperator(string $operator): bool {
+    private function validateOperator(string $operator): bool
+    {
         return isset($this->operatorToCallback[$operator]);
     }
 }
